@@ -5,6 +5,7 @@ use App\Http\Controllers\DashbordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FrontendController;
 
 
 
@@ -56,3 +57,8 @@ Route::get('logout',[LoginController::class, 'logout'])->name('logout');
 
 
 });
+
+
+
+// Frontend work
+Route::get('/',[FrontendController::class, 'index']);
