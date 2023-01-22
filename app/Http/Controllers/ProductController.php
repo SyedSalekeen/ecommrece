@@ -86,7 +86,7 @@ class ProductController extends Controller
         $update->quantity = $request->product_quantity;
         $update->price = $request->product_price;
         if($request->hasFile('product_thumbnail')) {
-            unlink(public_path($update->thumbnail));
+            unlink(public_path("product_image/".$update->thumbnail));
             $imageName = time().'.'.$request->product_thumbnail->extension();
             $request->product_thumbnail->move(public_path('product_thumbnail'), $imageName);
             $update->thumbnail = $imageName;

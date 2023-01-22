@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $update->status = $request->category_status;
         $update->description = $request->category_description;
         if($request->hasFile('category_image')) {
-            unlink(public_path($category->image));
+            unlink(public_path("category_image/".$update->image));
             $imageName = time().'.'.$request->category_image->extension();
             $request->category_image->move(public_path('category_image'), $imageName);
             $update->image = $imageName;
