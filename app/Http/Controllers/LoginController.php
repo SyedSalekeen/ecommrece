@@ -47,7 +47,7 @@ class LoginController extends Controller
 
         } else {
             return redirect()->route('dasboard');
-            
+
         }
 
     }
@@ -55,5 +55,29 @@ class LoginController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function signup() {
+        return view('Frontend.signup');
+    }
+
+    public function signup_submit(Request $request) {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+            'username' => 'required',
+        ]);
+        $store = new User();
+        $store->email = $request->email;
+        $store->username = $request->username;
+        $store->password = Hash::make($request->password);
+        $store->type = "3";
+        $store->status = "Active";
+        $store->role = "User";
+        $store->save();
+        return redirect()->route('website')->with('success',"Account created sucessfully");
+    }
+    public function login_user() {
+        return view('Frontend.login');
     }
 }
