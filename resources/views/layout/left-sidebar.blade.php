@@ -33,7 +33,7 @@
 
                 <li class="nav-item">
                     <a href="{{ route('dasboard') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Dashbord
                         </p>
@@ -43,7 +43,7 @@
 
                 <li class="nav-item">
                     <a href="{{ route('users')}}" class="nav-link">
-                        <i class="nav-icon far fa-user"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Users
                         </p>
@@ -52,7 +52,7 @@
 
                 <li class="nav-item">
                     <a href="{{ route('products') }}" class="nav-link">
-                        <i class="nav-icon far fa-user"></i>
+                        <i class="nav-icon fas fa-book"></i>
                         <p>
                             Products
                         </p>
@@ -64,6 +64,37 @@
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Product Categories
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{route('role_permissions')}}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Roles & Permission
+                        </p>
+                    </a>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="{{route('reviews')}}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Reviews
+                        </p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="{{route('feedbacks')}}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Feedback
                         </p>
                     </a>
                 </li>

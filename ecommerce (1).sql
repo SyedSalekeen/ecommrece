@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2023 at 04:58 PM
+-- Generation Time: Jan 23, 2023 at 05:58 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `ecommerce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` int(255) NOT NULL,
+  `user_id` int(255) DEFAULT NULL,
+  `product_id` int(255) DEFAULT NULL,
+  `product_quantity` int(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_quantity`, `created_at`, `updated_at`) VALUES
+(2, 7, 2, NULL, '2023-01-23 17:31:31', '2023-01-23 17:31:31'),
+(3, 7, 3, NULL, '2023-01-23 17:31:47', '2023-01-23 17:31:47'),
+(4, 7, 4, NULL, '2023-01-23 17:31:58', '2023-01-23 17:31:58'),
+(5, 7, 4, NULL, '2023-01-23 17:37:39', '2023-01-23 17:37:39'),
+(6, 7, 3, NULL, '2023-01-23 17:45:56', '2023-01-23 17:45:56');
 
 -- --------------------------------------------------------
 
@@ -60,6 +86,26 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `feedback` longtext DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `feedback`, `created_at`, `updated_at`) VALUES
+(1, 'dvdsvdsvvds', '2023-01-23 20:46:41', '2023-01-23 20:46:41');
 
 -- --------------------------------------------------------
 
@@ -184,6 +230,55 @@ INSERT INTO `product_images` (`id`, `product_id`, `image`, `created_at`, `update
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `review` longtext DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `review`, `created_at`, `updated_at`) VALUES
+(1, 7, 3, 'csascsccsacascsa', '2023-01-23 19:37:58', '2023-01-23 19:56:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_permissions`
+--
+
+CREATE TABLE `role_permissions` (
+  `id` int(11) NOT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `permission` varchar(255) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `role_permissions`
+--
+
+INSERT INTO `role_permissions` (`id`, `role`, `permission`, `updated_at`, `created_at`) VALUES
+(1, 'Product Manager', 'Add User', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(2, 'Product Manager', 'Edit User', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(3, 'Product Manager', 'Delete User', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(4, 'Product Manager', 'Delete Product', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(5, 'Product Manager', 'Add Catgeory', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(6, 'Product Manager', 'Edit Category', '2023-01-23 21:48:29', '2023-01-23 21:48:29'),
+(7, 'Product Manager', 'Delete Category', '2023-01-23 21:48:29', '2023-01-23 21:48:29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -211,11 +306,42 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `type`, `role`, `contact`, `status`, `address`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, NULL, NULL, 'admin@ecommerce.com', NULL, '$2y$10$6dxhT9yGjpZomwyBEkZiOe01a.CLiMRT64QnTJk.OUq3buN9q2re.', 1, NULL, '', '', '', NULL, '2022-09-26 02:31:31', '2022-09-26 02:31:31'),
 (2, 'Test', 'rulogoxewo', 'test@gmail.com', NULL, '$2y$10$ZNtDG52d02KTUFy0Mm9eAuC.yqlwM4HzN/N6.6jdYTkJc49.HaKJu', 2, 'User', '223', 'Active', 'csaccaccsac', NULL, '2023-01-23 02:25:19', '2023-01-23 03:39:07'),
-(3, NULL, 'daqime', 'josadyre@mailinator.com', NULL, '$2y$10$kW8n0I6rbUV3O0.KD4/qCu8idlx2LANcVIa0P6m5wSsa9pPKyptze', 3, 'User', NULL, 'Active', NULL, NULL, '2023-01-23 04:33:50', '2023-01-23 04:33:50');
+(3, NULL, 'daqime', 'josadyre@mailinator.com', NULL, '$2y$10$kW8n0I6rbUV3O0.KD4/qCu8idlx2LANcVIa0P6m5wSsa9pPKyptze', 3, 'User', NULL, 'Active', NULL, NULL, '2023-01-23 04:33:50', '2023-01-23 04:33:50'),
+(5, NULL, 'test', 'test1@gmail.com', NULL, '$2y$10$hLl4yC2rqjGi88kCe4enR.mGHAbItk.OBCTFnKZ/TWsl6uLsFKwb2', 3, 'User', NULL, 'Active', NULL, NULL, '2023-01-23 22:39:34', '2023-01-23 22:39:34'),
+(6, NULL, 'daruldevs.com', 'accountant@gmail.com', NULL, '$2y$10$hWjB/nooNUBRttpsEhKvcOKccKVRLWB1I/iebQUiHgHpHtEVZo5Ni', 3, 'User', NULL, 'Active', NULL, NULL, '2023-01-23 22:54:50', '2023-01-23 22:54:50'),
+(7, NULL, '123', 'salekeen@gmail.com', NULL, '$2y$10$ixO98fpycs9J3jRPv92OOefXbnzVY1pdAwv7FIZd0oJWPFCEwDbiq', 3, 'User', NULL, 'Active', NULL, NULL, '2023-01-23 22:56:25', '2023-01-23 22:56:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlets`
+--
+
+CREATE TABLE `wishlets` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `wishlets`
+--
+
+INSERT INTO `wishlets` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(2, 7, 3, '2023-01-23 20:29:40', '2023-01-23 20:29:40'),
+(3, 7, 2, '2023-01-23 20:32:03', '2023-01-23 20:32:03');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
@@ -229,6 +355,12 @@ ALTER TABLE `categories`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -263,6 +395,18 @@ ALTER TABLE `product_images`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role_permissions`
+--
+ALTER TABLE `role_permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -270,8 +414,20 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `wishlets`
+--
+ALTER TABLE `wishlets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -284,6 +440,12 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -310,10 +472,28 @@ ALTER TABLE `product_images`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `role_permissions`
+--
+ALTER TABLE `role_permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `wishlets`
+--
+ALTER TABLE `wishlets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

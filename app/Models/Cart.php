@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vendor extends Model
+class Cart extends Model
 {
     use HasFactory;
-    public function vendor_payment()
+
+    public function getProducts()
     {
-        return $this->hasMany(givenAmountToVenor::class, 'vendor_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
-    
 }

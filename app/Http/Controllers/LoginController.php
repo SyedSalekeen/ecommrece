@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class LoginController extends Controller
@@ -63,7 +63,7 @@ class LoginController extends Controller
 
     public function signup_submit(Request $request) {
         $request->validate([
-            'email' => 'required',
+            'email' => 'required|unique:users,email',
             'password' => 'required',
             'username' => 'required',
         ]);
@@ -75,9 +75,44 @@ class LoginController extends Controller
         $store->status = "Active";
         $store->role = "User";
         $store->save();
-        return redirect()->route('website')->with('success',"Account created sucessfully");
+        Alert::success('Success', 'Account created sucessfully');
+
+        return redirect()->route('website');
     }
     public function login_user() {
         return view('Frontend.login');
+    }
+
+    public function signin_submit(Request $request) {
+
+
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        // dd($request->all());
+        $user = User::where('email', $request->email)->first();
+        if($user) {
+            if($user->type !== 3) {
+                Alert::error('Error', 'Credentials not matched');
+            return redirect()->route('login_user');
+            }
+        }
+        if (!Auth::attempt($request->only("email", "password"))) {
+            Alert::error('Error', 'Credentials not matched');
+            return redirect()->route('login_user');
+
+        } else {
+            Alert::success('Success', 'You are login successfully');
+
+            return redirect()->route('website');
+
+        }
+    }
+
+    public function logout_user() {
+        Auth::logout();
+        Alert::success('Success', 'You are logout successfully');
+        return redirect()->route('website');
     }
 }
