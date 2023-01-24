@@ -24,9 +24,9 @@
 
                     </div>
                     <div class="col-md-2 mb-2">
-                        <a href="{{ route('add_permission') }}">
+                        {{-- <a href="{{ route('add_permission') }}">
                             <button type="button" class="btn btn-block btn-dark">Add Permission</button>
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 <div class="row">
@@ -40,19 +40,33 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Feedback</th>
+                                            <th>ROole</th>
 
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach ($feedbacks as $item)
+
                                             <tr>
-                                                <td>{{ $item->id }}</td>
-                                                <td>{{ $item->feedback }}</td>
+                                                <td>{{ $role->id }}</td>
+                                                <td>{{ $role->role }}</td>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-default">Action</button>
+                                                        <button type="button"
+                                                            class="btn btn-default dropdown-toggle dropdown-icon"
+                                                            data-toggle="dropdown">
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <div class="dropdown-menu" role="menu">
+                                                            <a class="dropdown-item" href="{{route('edit_permission',$role->id)}}">Edit</a>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
 
                                             </tr>
-                                        @endforeach --}}
+
 
 
                                     </tbody>
