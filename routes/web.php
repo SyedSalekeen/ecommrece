@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::post('updateProfile', [ProfileController::class, 'updateProfile'])->name('updateProfile');
     Route::post('submit_review', [FrontendController::class, 'submit_review'])->name('submit_review');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('logout_user', [LoginController::class, 'logout_user'])->name('logout_user');
