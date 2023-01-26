@@ -18,7 +18,7 @@ class OrderController extends Controller
         $checkout_detals1 = Checkout::find($id);
 
         $checkout_detals2 = CheckoutProduct::where('checkout_id',$id)->with('getProducts')->get();
-        dd($checkout_detals2);
+
         return view('order.detail',get_defined_vars());
 
     }
