@@ -1,3 +1,7 @@
+<?php if (auth()->user()->type == 2) {
+    $edit_user = App\Models\RolePermission::where('permission', 'Edit Reviews')->first();
+    $delete_user = App\Models\RolePermission::where('permission', 'Delete Reviews')->first();
+} ?>
 @extends('layout.master')
 
 @section('content')
@@ -64,8 +68,33 @@
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <div class="dropdown-menu" role="menu">
-                                                            <a class="dropdown-item" href="{{route('edit_review',$item->id)}}">Edit</a>
-                                                            <a class="dropdown-item" href="{{route('delete_review', $item->id)}}" onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+
+                                                            @if (auth()->user()->type == 2)
+                                                                @if ($edit_user !== null)
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('edit_review', $item->id) }}">Edit</a>
+                                                                @endif
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('edit_review', $item->id) }}">Edit</a>
+                                                            @endif
+
+
+
+                                                            @if (auth()->user()->type == 2)
+                                                                @if ($delete_user !== null)
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('delete_review', $item->id) }}"
+                                                                        onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+                                                                @endif
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('delete_review', $item->id) }}"
+                                                                    onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+                                                            @endif
+
+
+
 
                                                         </div>
                                                     </div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -95,8 +96,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('remove_item_from_cart', [CartController::class, 'remove_item_from_cart'])->name('remove_item_from_cart');
     Route::post('remove_item_from_wishlet', [FrontendController::class, 'remove_item_from_wishlet'])->name('remove_item_from_wishlet');
 
+    // order
+    Route::get('orders',[OrderController::class, 'index'])->name('orders');
+    Route::get('detail-order/{id}',[OrderController::class, 'detail_order'])->name('detail_order');
     // checkout work
     Route::post('/checkout', [CheckoutController::class, 'showCheckout']);
+    Route::post('checkout_submit',[CheckoutController::class, 'checkout'])->name('checkout');
 
 });
 
@@ -112,3 +117,6 @@ Route::get('add_to_wishlet/{id}', [FrontendController::class, 'add_to_wishlet'])
 Route::get('/', [FrontendController::class, 'index'])->name('website');
 // website feedback submit route
 Route::post('feedback', [FrontendController::class, 'feedback'])->name('feedback');
+Route::post('search', [FrontendController::class, 'search'])->name('search');
+
+

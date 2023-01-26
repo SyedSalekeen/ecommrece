@@ -1,3 +1,9 @@
+<?php if (auth()->user()->type == 2) {
+    $add_user = App\Models\RolePermission::where('permission', 'Add Product')->first();
+
+    $edit_user = App\Models\RolePermission::where('permission', 'Edit Product')->first();
+    $delete_user = App\Models\RolePermission::where('permission', 'Delete Product')->first();
+} ?>
 @extends('layout.master')
 
 @section('content')
@@ -23,11 +29,22 @@
                     <div class="col-md-10">
 
                     </div>
-                    <div class="col-md-2 mb-2">
-                        <a href="{{ route('create_product') }}">
-                            <button type="button" class="btn btn-block btn-dark">Add Products</button>
-                        </a>
-                    </div>
+                    @if (auth()->user()->type == 2)
+                        @if ($add_user !== null)
+                            <div class="col-md-2 mb-2">
+                                <a href="{{ route('create_product') }}">
+                                    <button type="button" class="btn btn-block btn-dark">Add Products</button>
+                                </a>
+                            </div>
+                        @endif
+                    @else
+                        <div class="col-md-2 mb-2">
+                            <a href="{{ route('create_product') }}">
+                                <button type="button" class="btn btn-block btn-dark">Add Products</button>
+                            </a>
+                        </div>
+                    @endif
+
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -49,7 +66,7 @@
 
                                         </tr>
                                     </thead>
-                                <tbody>
+                                    <tbody>
                                         @foreach ($products as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
@@ -58,7 +75,8 @@
                                                 <td>{{ $item->status }}</td>
                                                 <td>{{ $item->description }}</td>
                                                 <td><img style="    height: 100px;
-                                                    width: 100px;" src="{{ asset('product_thumbnail/'.$item->thumbnail) }}"></td>
+                                                    width: 100px;"
+                                                        src="{{ asset('product_thumbnail/' . $item->thumbnail) }}"></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-default">Action</button>
@@ -68,8 +86,30 @@
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <div class="dropdown-menu" role="menu">
-                                                            <a class="dropdown-item" href="{{route('edit_product',$item->id)}}">Edit</a>
-                                                            <a class="dropdown-item" href="{{route('delete_category', $item->id)}}" onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+                                                            @if (auth()->user()->type == 2)
+                                                                @if ($edit_user !== null)
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('edit_product', $item->id) }}">Edit</a>
+                                                                @endif
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('edit_product', $item->id) }}">Edit</a>
+                                                            @endif
+
+
+
+                                                            @if (auth()->user()->type == 2)
+                                                                @if ($delete_user !== null)
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('delete_category', $item->id) }}"
+                                                                        onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+                                                                @endif
+                                                            @else
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('delete_category', $item->id) }}"
+                                                                    onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
+                                                            @endif
+
 
                                                         </div>
                                                     </div>

@@ -55,17 +55,24 @@ class RolePermissionController extends Controller
     }
 
     public function update_permission(Request $request) {
-        $role = RolePermission::all();;
+        // dd($request->all());
+        $role = RolePermission::all();
         // $role->delete();
-        foreach($role as $deleteRole) {
-            RolePermission::find($deleteRole->id)->delete();
+        foreach($role as $key => $deleteRole) {
+            if($key != 0) {
+                RolePermission::find($deleteRole->id)->delete();
+
+            }
         }
-        foreach ($request->permissions as $item) {
-            $store = new RolePermission();
-            $store->role = $request->role;
-            $store->permission = $item;
-            $store->save();
+        if($request->permissions) {
+            foreach ($request->permissions as $item) {
+                $store = new RolePermission();
+                $store->role = $request->role;
+                $store->permission = $item;
+                $store->save();
+            }
         }
+
         return redirect()->route('role_permissions')->with('success', "Role & Permsission has been updated");
     }
 }

@@ -42,13 +42,22 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         // dd($request->all());
-        if (!Auth::attempt($request->only("email", "password"))) {
-            return redirect()->route('login')->with("error", "Credentials not matched");
+        $find = User::where('email',$request->email)->first();
+        if($find){
+            if($find->type == 1 || $find->type == 2) {
+                if (!Auth::attempt($request->only("email", "password"))) {
+                    return redirect()->route('login')->with("error", "Credentials not matched");
 
-        } else {
-            return redirect()->route('dasboard');
+                } else {
+                    return redirect()->route('dasboard');
+
+                }
+            } else {
+                return redirect()->route('login')->with("error", "Credentials not matched");
+            }
 
         }
+
 
     }
 

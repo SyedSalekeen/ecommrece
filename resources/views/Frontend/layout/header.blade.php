@@ -1,6 +1,7 @@
  <!-- HEADER -->
  <?php
  $products = App\Models\Cart::where('user_id', auth()->id())
+     ->where('status', '1')
      ->with('getProducts')
      ->get();
  $countProduct = count($products);
@@ -64,14 +65,11 @@
                  <!-- SEARCH BAR -->
                  <div class="col-md-6">
                      <div class="header-search">
-                         <form>
-                             <select class="input-select">
-                                 <option value="0">All Categories</option>
-                                 <option value="1">Category 01</option>
-                                 <option value="1">Category 02</option>
-                             </select>
-                             {{-- <input class="input" placeholder="Search here"> --}}
-                             <button class="search-btn">Search</button>
+                         <form method="POST" action="{{ route('search') }}">
+                             @csrf
+
+                             <input class="input" name="serach" type="text" placeholder="Search here">
+                             <button class="search-btn" type="submit">Search</button>
                          </form>
                      </div>
                  </div>
@@ -82,7 +80,7 @@
                      <div class="header-ctn">
                          @auth
                              <!-- Wishlist -->
-                              <div class="dropdown">
+                             <div class="dropdown">
                                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                      <i class="fa fa-heart-o"></i>
                                      <span>Your Wishlist</span>
@@ -92,28 +90,28 @@
 
 
                                  <div class="cart-dropdown">
-                                    <div class="cart-list">
+                                     <div class="cart-list">
 
-                                        @foreach ($wshletProducts as $product)
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}"
-                                                        alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a
-                                                            href="#">{{ $product->getProducts->name }}</a>
-                                                    </h3>
+                                         @foreach ($wshletProducts as $product)
+                                             <div class="product-widget">
+                                                 <div class="product-img">
+                                                     <img src="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}"
+                                                         alt="">
+                                                 </div>
+                                                 <div class="product-body">
+                                                     <h3 class="product-name"><a
+                                                             href="#">{{ $product->getProducts->name }}</a>
+                                                     </h3>
 
-                                                </div>
-                                                <button class="delete deleteWishlet" data-id="{{ $product->id }}"><i
-                                                        class="fa fa-close"></i></button>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                                 </div>
+                                                 <button class="delete deleteWishlet" data-id="{{ $product->id }}"><i
+                                                         class="fa fa-close"></i></button>
+                                             </div>
+                                         @endforeach
+                                     </div>
 
 
-                                </div>
+                                 </div>
 
 
 
@@ -131,47 +129,51 @@
                                      <div class="qty">{{ $countProduct }}</div>
                                  </a>
                                  <div class="cart-dropdown">
-                                    <form action="{{ url('checkout') }}" method="POST">
-                                        @csrf
-                                     <div class="cart-list">
+                                     <form action="{{ url('checkout') }}" method="POST">
+                                         @csrf
+                                         <div class="cart-list">
 
-                                         @foreach ($products as $product)
-                                            {{-- set hidden values --}}
+                                             @foreach ($products as $product)
+                                                 {{-- set hidden values --}}
 
 
-                                                <input type="hidden" name="thumbnail[]" value="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}">
-                                                <input type="hidden" name="product_name[]" value="{{ $product->getProducts->name }}">
-                                                <input type="hidden" name="product_price[]" value="{{ $product->getProducts->price }}">
-                                                <input type="hidden" name="subtotal" value="{{ $productPriceCount }}">
+                                                 <input type="hidden" name="thumbnail[]"
+                                                     value="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}">
+                                                 <input type="hidden" name="product_name[]"
+                                                     value="{{ $product->getProducts->name }}">
+                                                 <input type="hidden" name="product_price[]"
+                                                     value="{{ $product->getProducts->price }}">
+                                                 <input type="hidden" name="subtotal" value="{{ $productPriceCount }}">
 
-                                            {{-- set hidden values --}}
-                                             <div class="product-widget">
-                                                 <div class="product-img">
-                                                     <img src="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}"
-                                                         alt="">
+                                                 {{-- set hidden values --}}
+                                                 <div class="product-widget">
+                                                     <div class="product-img">
+                                                         <img src="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}"
+                                                             alt="">
+                                                     </div>
+                                                     <div class="product-body">
+                                                         <h3 class="product-name"><a
+                                                                 href="#">{{ $product->getProducts->name }}</a>
+                                                         </h3>
+                                                         <h4 class="product-price"><span
+                                                                 class="qty">1x</span>${{ $product->getProducts->price }}
+                                                         </h4>
+                                                     </div>
+                                                     <button class="delete deleteCartItem" data-id="{{ $product->id }}"><i
+                                                             class="fa fa-close"></i></button>
                                                  </div>
-                                                 <div class="product-body">
-                                                     <h3 class="product-name"><a
-                                                             href="#">{{ $product->getProducts->name }}</a>
-                                                     </h3>
-                                                     <h4 class="product-price"><span
-                                                             class="qty">1x</span>${{ $product->getProducts->price }}
-                                                     </h4>
-                                                 </div>
-                                                 <button class="delete deleteCartItem" data-id="{{ $product->id }}"><i
-                                                         class="fa fa-close"></i></button>
-                                             </div>
-                                         @endforeach
-                                     </div>
-                                     <div class="cart-summary">
-                                         <small>{{ $countProduct }} Item(s)</small>
-                                         <h5>SUBTOTAL: ${{ $productPriceCount }}</h5>
-                                     </div>
-                                     <div class="cart-btns">
-                                         {{-- <a href="#">View Cart</a> --}}
-                                         <button type="submit">Checkout <i class="fa fa-arrow-circle-right"></i></button>
-                                     </div>
-                                    </form>
+                                             @endforeach
+                                         </div>
+                                         <div class="cart-summary">
+                                             <small>{{ $countProduct }} Item(s)</small>
+                                             <h5>SUBTOTAL: ${{ $productPriceCount }}</h5>
+                                         </div>
+                                         <div class="cart-btns">
+                                             {{-- <a href="#">View Cart</a> --}}
+                                             <button type="submit">Checkout <i
+                                                     class="fa fa-arrow-circle-right"></i></button>
+                                         </div>
+                                     </form>
                                  </div>
                              </div>
                              <!-- /Cart -->

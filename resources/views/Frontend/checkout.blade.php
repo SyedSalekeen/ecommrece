@@ -11,10 +11,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h3 class="breadcrumb-header">Checkout</h3>
-						<ul class="breadcrumb-tree">
-							<li><a href="#">Home</a></li>
-							<li class="active">Checkout</li>
-						</ul>
+
 					</div>
 				</div>
 				<!-- /row -->
@@ -29,7 +26,14 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
+                    <form method="POST" action="{{ route('checkout') }}">
+                        @csrf
+                        @foreach ($products as $pro )
+                            <input type="hidden" name="product_id[]" value="{{ $pro->product_id }}">
+                            <input type="hidden" name="cart_id[]" value="{{ $pro->id }}">
 
+                        @endforeach
+                        <input type="hidden" name="amount" value="{{ $subTotal }}">
 					<div class="col-md-7">
 						<!-- Billing Details -->
 						<div class="billing-details">
@@ -37,10 +41,10 @@
 								<h3 class="title">Billing address</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" placeholder="First Name">
+								<input class="input" type="text" name="first_name" placeholder="First Name">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" placeholder="Last Name">
+								<input class="input" type="text" name="last_name" placeholder="Last Name">
 							</div>
 							<div class="form-group">
 								<input class="input" type="email" name="email" placeholder="Email">
@@ -55,72 +59,16 @@
 								<input class="input" type="text" name="country" placeholder="Country">
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+								<input class="input" type="text" name="zip_code" placeholder="ZIP Code">
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel" placeholder="Telephone">
 							</div>
-							<div class="form-group">
-								<div class="input-checkbox">
-									<input type="checkbox" id="create-account">
-									<label for="create-account">
-										<span></span>
-										Create Account?
-									</label>
-									<div class="caption">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
-										<input class="input" type="password" name="password" placeholder="Enter Your Password">
-									</div>
-								</div>
-							</div>
+
 						</div>
 						<!-- /Billing Details -->
 
-						<!-- Shiping Details -->
-						<div class="shiping-details">
-							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
-							</div>
-							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
-								<label for="shiping-address">
-									<span></span>
-									Ship to a diffrent address?
-								</label>
-								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="email" name="email" placeholder="Email">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Address">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="country" placeholder="Country">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /Shiping Details -->
 
-						<!-- Order notes -->
-						<div class="order-notes">
-							<textarea class="input" placeholder="Order Notes"></textarea>
-						</div>
 						<!-- /Order notes -->
 					</div>
 
@@ -153,52 +101,11 @@
 								<div><strong class="order-total">{{ $subTotal }}</strong></div>
 							</div>
 						</div>
-						{{-- <div class="payment-method">
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-1">
-								<label for="payment-1">
-									<span></span>
-									Direct Bank Transfer
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-2">
-								<label for="payment-2">
-									<span></span>
-									Cheque Payment
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
-								<label for="payment-3">
-									<span></span>
-									Paypal System
-								</label>
-								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								</div>
-							</div>
-						</div> --}}
-						{{-- <div class="input-checkbox">
-							<input type="checkbox" id="terms">
-							<label for="terms">
-								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
-							</label>
-						</div> --}}
+
                         <label for="">
-                            User Paid Amount
+                            Cash on Delivery
                         </label>
-                        <input type="text" name="userAmount" id="userAmount" placeholder="Please pay your amount">
-                        <input type="hidden" name="userPaidAmount" id="userPaidAmount">
-                        <input type="hidden" name="subTotal" id="subTotal" value="{{ $subTotal }}">
-						<a href="#" class="primary-btn order-submit" id="placeOrderBtn">Place order</a>
+<button type="submit" class="primary-btn order-submit" >Place order</button>
 					</div>
 					<!-- /Order Details -->
 				</div>
@@ -213,31 +120,7 @@
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="newsletter">
-							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
-							<form>
-								<input class="input" type="email" placeholder="Enter Your Email">
-								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-							</form>
-							<ul class="newsletter-follow">
-								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-instagram"></i></a>
-								</li>
-								<li>
-									<a href="#"><i class="fa fa-pinterest"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
+			
 				<!-- /row -->
 			</div>
 			<!-- /container -->

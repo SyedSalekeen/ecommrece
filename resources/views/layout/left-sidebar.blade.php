@@ -80,6 +80,17 @@
 
 
 
+
+                <li class="nav-item">
+                    <a href="{{route('orders')}}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Orders
+                        </p>
+                    </a>
+                </li>
+
+
                 <li class="nav-item">
                     <a href="{{route('reviews')}}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>

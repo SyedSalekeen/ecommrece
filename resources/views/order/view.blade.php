@@ -1,9 +1,3 @@
-<?php if (auth()->user()->type == 2) {
-    $add_user = App\Models\RolePermission::where('permission', 'Add User')->first();
-
-    $edit_user = App\Models\RolePermission::where('permission', 'Edit User')->first();
-    $delete_user = App\Models\RolePermission::where('permission', 'Delete User')->first();
-} ?>
 @extends('layout.master')
 
 @section('content')
@@ -13,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0"><b>Users</b></h1>
+                        <h1 class="m-0"><b>Reviews</b></h1>
                     </div><!-- /.col -->
 
                 </div><!-- /.row -->
@@ -29,21 +23,6 @@
                     <div class="col-md-10">
 
                     </div>
-                    @if (auth()->user()->type == 2)
-                        @if ($add_user !== null)
-                            <div class="col-md-2 mb-2">
-                                <a href="{{ route('create_user') }}">
-                                    <button type="button" class="btn btn-block btn-dark">Add User</button>
-                                </a>
-                            </div>
-                        @endif
-                    @else
-                        <div class="col-md-2 mb-2">
-                            <a href="{{ route('create_user') }}">
-                                <button type="button" class="btn btn-block btn-dark">Add User</button>
-                            </a>
-                        </div>
-                    @endif
 
                 </div>
                 <div class="row">
@@ -57,22 +36,20 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>User Name</th>
-                                            <th>User Status</th>
-                                            <th>User Role</th>
-                                            <th>User Contact Number</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Amount</th>
                                             <th>Action</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $item)
+                                        @foreach ($order as $item)
                                             <tr>
                                                 <td>{{ $item->id }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->status }}</td>
-                                                <td>{{ $item->role }}</td>
-                                                <td>{{ $item->contact }}</td>
+                                                <td>{{ $item->first_name }}</td>
+                                                <td>{{ $item->last_name }}</td>
+                                                <td>{{ $item->amount }}</td>
 
                                                 <td>
                                                     <div class="btn-group">
@@ -83,30 +60,8 @@
                                                             <span class="sr-only">Toggle Dropdown</span>
                                                         </button>
                                                         <div class="dropdown-menu" role="menu">
-                                                            @if (auth()->user()->type == 2)
-                                                                @if ($edit_user !== null)
-                                                                    <a class="dropdown-item"
-                                                                        href="{{ route('edit_user', $item->id) }}">Edit</a>
-                                                                @endif
-                                                            @else
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('edit_user', $item->id) }}">Edit</a>
-                                                            @endif
-
-
-
-                                                            @if (auth()->user()->type == 2)
-                                                                @if ($delete_user !== null)
-                                                                    <a class="dropdown-item"
-                                                                        href="{{ route('delete_category', $item->id) }}"
-                                                                        onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
-                                                                @endif
-                                                            @else
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('delete_category', $item->id) }}"
-                                                                    onclick="return confirm('Are you sure you want to delete this vendor?');">Delete</a>
-                                                            @endif
-
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('detail_order', $item->id) }}">Details</a>
 
                                                         </div>
                                                     </div>

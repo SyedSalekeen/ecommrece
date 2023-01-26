@@ -16,6 +16,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit"></script>
 </head>
 <style>
     /* ======================================================================== */
@@ -343,12 +345,16 @@
             <h2>Login</h2>
 
         </header>
-        <form action="{{ route('signin_submit') }}" class="form" method="POST">
+        <form action="{{ route('signin_submit') }}" class="form" method="POST" id="formLogin">
             @csrf
             <input type="email" required placeholder="Email" name="email">
             <input type="password" required placeholder="Password" name="password">
             <a href="{{ route('signup') }}">Not an account? Create your account</a>
-            <button type="submit">
+
+            <div class="g-recaptcha-contact" data-sitekey="6Le_kCwkAAAAACQh41Tf3qAZaOLEmwU3Jmo6ieUS"
+                id="RecaptchaField2"></div>
+            <input type="hidden" class="hiddenRecaptcha" name="ct_hiddenRecaptcha" required id="ct_hiddenRecaptcha">
+            <button type="button" id="formButton">
                 LOGIN
                 <i class="fa-sharp fa-solid fa-arrow-right"></i>
             </button>
@@ -356,5 +362,45 @@
     </div>
 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>
+<script>
+    console.log("ascac");
+    var CaptchaCallback = function() {
+        var widgetId2;
+        widgetId2 = grecaptcha.render('RecaptchaField2', {
+            'sitekey': '6Le_kCwkAAAAACQh41Tf3qAZaOLEmwU3Jmo6ieUS',
+            'callback': correctCaptcha_contact
+        });
+    };
+
+    var correctCaptcha_contact = function(response) {
+        $("#ct_hiddenRecaptcha").val(response);
+    };
+
+
+    // $("#formLogin").validate({
+    //     ignore: [],
+    //     rules: {
+    //         ct_hiddenRecaptcha: {
+    //             required: true,
+    //         },
+
+    //     },
+    // });
+
+    $("#formButton").click(function() {
+
+        var val = $("#ct_hiddenRecaptcha").val();
+        if(val == '') {
+            alert("Recaptcha is required")
+        } else {
+            $("#formLogin").submit();
+        }
+    })
+</script>
 
 </html>

@@ -23,6 +23,16 @@ class FrontendController extends Controller
         // dd($newProducts);
         return view('Frontend.index',get_defined_vars());
     }
+
+    public function search(Request $request) {
+
+        $catgeories = Category::where('status',"Active")->get();
+        $newProducts = Product::orderBy('created_at','desc')->take(5)->get();
+        $allProducts = Product::where('status','Active')->get();
+        $serchProduct = Product::where('name', 'like', '%' . $request->serach . '%')->get();
+        return view('Frontend.search',get_defined_vars());
+
+    }
     public function catgeory($id) {
         // dd($id);
         $catgeories = Category::where('status',"Active")->get();
