@@ -12,6 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\CheckoutController;
 
 
 /*
@@ -93,6 +94,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('remove_item_from_cart', [CartController::class, 'remove_item_from_cart'])->name('remove_item_from_cart');
     Route::post('remove_item_from_wishlet', [FrontendController::class, 'remove_item_from_wishlet'])->name('remove_item_from_wishlet');
+
+    // checkout work
+    Route::post('/checkout', [CheckoutController::class, 'showCheckout']);
+
 });
 
 // non authenticated routes

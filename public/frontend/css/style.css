@@ -588,7 +588,7 @@ textarea.input {
   margin: 0px -17px -17px;
 }
 
-.cart-dropdown .cart-btns>a {
+.cart-dropdown .cart-btns>button {
   display: inline-block;
   width: calc(50% - 0px);
   padding: 12px;
@@ -600,12 +600,12 @@ textarea.input {
   transition: 0.2s all;
 }
 
-.cart-dropdown .cart-btns>a:first-child {
+.cart-dropdown .cart-btns>button:first-child {
   margin-right: -4px;
   background-color: #1e1f29;
 }
 
-.cart-dropdown .cart-btns>a:hover {
+.cart-dropdown .cart-btns>button:hover {
   opacity: 0.9;
 }
 

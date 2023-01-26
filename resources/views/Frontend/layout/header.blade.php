@@ -121,16 +121,30 @@
                              <!-- /Wishlist -->
 
                              <!-- Cart -->
+
                              <div class="dropdown">
+
                                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+
                                      <i class="fa fa-shopping-cart"></i>
                                      <span>Your Cart</span>
                                      <div class="qty">{{ $countProduct }}</div>
                                  </a>
                                  <div class="cart-dropdown">
+                                    <form action="{{ url('checkout') }}" method="POST">
+                                        @csrf
                                      <div class="cart-list">
 
                                          @foreach ($products as $product)
+                                            {{-- set hidden values --}}
+
+
+                                                <input type="hidden" name="thumbnail[]" value="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}">
+                                                <input type="hidden" name="product_name[]" value="{{ $product->getProducts->name }}">
+                                                <input type="hidden" name="product_price[]" value="{{ $product->getProducts->price }}">
+                                                <input type="hidden" name="subtotal" value="{{ $productPriceCount }}">
+
+                                            {{-- set hidden values --}}
                                              <div class="product-widget">
                                                  <div class="product-img">
                                                      <img src="{{ asset('product_thumbnail/' . $product->getProducts->thumbnail) }}"
@@ -155,8 +169,9 @@
                                      </div>
                                      <div class="cart-btns">
                                          {{-- <a href="#">View Cart</a> --}}
-                                         <a href="#">Checkout <i class="fa fa-arrow-circle-right"></i></a>
+                                         <button type="submit">Checkout <i class="fa fa-arrow-circle-right"></i></button>
                                      </div>
+                                    </form>
                                  </div>
                              </div>
                              <!-- /Cart -->
